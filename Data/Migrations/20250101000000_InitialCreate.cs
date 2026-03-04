@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DiscordKeyBot.Data.Migrations
 {
-    /// <inheritdoc />
+    [Migration("20250101000000_InitialCreate")]
     public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
