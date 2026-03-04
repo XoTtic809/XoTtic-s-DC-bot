@@ -57,7 +57,7 @@ public static class ServiceCollectionExtensions
             return new InteractionService(client, new InteractionServiceConfig
             {
                 LogLevel          = LogSeverity.Info,
-                DefaultRunMode    = RunMode.Async,
+                DefaultRunMode    = RunMode.Sync,
                 UseCompiledLambda = true
             });
         });
