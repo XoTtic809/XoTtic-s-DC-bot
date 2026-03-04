@@ -1,6 +1,7 @@
 using DiscordKeyBot.API.Middleware;
 using DiscordKeyBot.Data;
 using DiscordKeyBot.Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
