@@ -1,0 +1,23 @@
+## .NET / C#
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+## Environment variables — NEVER commit real tokens
+.env
+
+## EF Core migrations snapshot (keep migrations themselves, exclude these)
+## Uncomment if you want to exclude snapshot:
+# **/Migrations/*Snapshot.cs
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Rider / JetBrains
+.idea/
+
+## VS Code
+.vscode/
