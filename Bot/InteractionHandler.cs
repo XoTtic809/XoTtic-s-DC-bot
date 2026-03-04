@@ -11,23 +11,26 @@ public sealed class InteractionHandler
     private readonly DiscordSocketClient _client;
     private readonly InteractionService _interactionService;
     private readonly IServiceScopeFactory _scopeFactory;
+    private readonly IServiceProvider _services;
     private readonly ILogger<InteractionHandler> _logger;
 
     public InteractionHandler(
         DiscordSocketClient client,
         InteractionService interactionService,
         IServiceScopeFactory scopeFactory,
+        IServiceProvider services,
         ILogger<InteractionHandler> logger)
     {
         _client             = client;
         _interactionService = interactionService;
         _scopeFactory       = scopeFactory;
+        _services           = services;
         _logger             = logger;
     }
 
     public async Task InitializeAsync()
     {
-        await _interactionService.AddModulesAsync(Assembly.GetExecutingAssembly(), null);
+        await _interactionService.AddModulesAsync(Assembly.GetExecutingAssembly(), _services);
 
         _client.InteractionCreated               += HandleInteractionAsync;
         _interactionService.SlashCommandExecuted += OnSlashCommandExecutedAsync;
