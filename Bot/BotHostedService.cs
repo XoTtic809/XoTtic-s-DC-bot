@@ -72,6 +72,8 @@ public sealed class BotHostedService : IHostedService
         {
             if (_config.GuildId.HasValue)
             {
+                // Clear any previously registered global commands to avoid duplicates
+                await _client.Rest.DeleteAllGlobalCommandsAsync();
                 await _interactionService.RegisterCommandsToGuildAsync(_config.GuildId.Value);
                 _logger.LogInformation("Commands registered to guild {GuildId}", _config.GuildId.Value);
             }
