@@ -57,6 +57,26 @@ using (var scope = app.Services.CreateScope())
     {
         logger.LogInformation("Running database migrations...");
         await db.Database.MigrateAsync();
+
+        // Ensure schema exists regardless of migration state
+        await db.Database.ExecuteSqlRawAsync(@"
+            CREATE TABLE IF NOT EXISTS license_keys (
+                id                uuid                     NOT NULL DEFAULT gen_random_uuid(),
+                key               character varying(19)    NOT NULL,
+                is_used           boolean                  NOT NULL DEFAULT false,
+                discord_user_id   character varying(20),
+                hwid              character varying(256),
+                expiration_date   timestamp with time zone NOT NULL,
+                created_at        timestamp with time zone NOT NULL DEFAULT now(),
+                redeemed_at       timestamp with time zone,
+                is_revoked        boolean                  NOT NULL DEFAULT false,
+                CONSTRAINT pk_license_keys PRIMARY KEY (id)
+            )");
+        await db.Database.ExecuteSqlRawAsync(
+            "CREATE UNIQUE INDEX IF NOT EXISTS ix_license_keys_key ON license_keys (key)");
+        await db.Database.ExecuteSqlRawAsync(
+            "CREATE INDEX IF NOT EXISTS ix_license_keys_discord_user_id ON license_keys (discord_user_id)");
+
         logger.LogInformation("Migrations done.");
     }
     catch (Exception ex)
