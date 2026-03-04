@@ -54,7 +54,7 @@ public sealed class InteractionHandler
         }
     }
 
-    private Task OnSlashCommandExecutedAsync(SlashCommandInfo info, IInteractionContext context, IResult result)
+    private Task OnSlashCommandExecutedAsync(SlashCommandInfo info, IInteractionContext context, Discord.Interactions.IResult result)
     {
         if (!result.IsSuccess)
             _logger.LogWarning("/{Command} failed: {Error}", info.Name, result.ErrorReason);
